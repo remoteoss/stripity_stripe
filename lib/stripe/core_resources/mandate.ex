@@ -35,6 +35,11 @@ defmodule Stripe.Mandate do
             reference: String.t(),
             url: String.t()
           },
+          optional(:bacs_debit) => %{
+            network_status: String.t(),
+            reference: String.t(),
+            url: String.t()
+          },
           type: String.t()
         }
 
