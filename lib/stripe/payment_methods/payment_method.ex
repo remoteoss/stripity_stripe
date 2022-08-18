@@ -22,6 +22,12 @@ defmodule Stripe.PaymentMethod do
           last4: String.t() | nil
         }
 
+  @type bacs_debit :: %{
+          fingerprint: String.t() | nil,
+          last4: String.t() | nil,
+          sort_code: String.t() | nil
+        }
+
   @type t :: %__MODULE__{
           id: Stripe.id(),
           object: String.t(),
@@ -39,6 +45,7 @@ defmodule Stripe.PaymentMethod do
           metadata: Stripe.Types.metadata(),
           au_becs_debit: au_becs_debit() | nil,
           sepa_debit: sepa_debit() | nil,
+          bacs_debit: bacs_debit() | nil,
           type: String.t()
         }
 
@@ -54,6 +61,7 @@ defmodule Stripe.PaymentMethod do
     :metadata,
     :au_becs_debit,
     :sepa_debit,
+    :bacs_debit,
     :type
   ]
 
