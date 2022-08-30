@@ -195,4 +195,29 @@ defmodule Stripe.Customer do
     |> put_method(:delete)
     |> make_request()
   end
+
+  @doc """
+  A customer's Cash balance represents real funds.
+  Customers can add funds to their cash balance by sending a bank transfer.
+  These funds can be used for payment and can eventually be paid out to your bank account.
+
+  This function changes the settings on a customer’s cash balance.
+
+  Example:  Change reconcilation mode to manual
+
+   params = %{settings: %{reconciliation_mode: "manual"}}
+  {:ok, customer} = Stripe.Customer.retrieve("sub_123")
+
+  """
+  @spec cash_balance(Stripe.id() | t, Stripe.options()) ::
+          {:ok, t} | {:error, Stripe.Error.t()}
+  def cash_balance(id, params, opts \\ []) do
+    new_request(opts)
+    |> put_endpoint(@plural_endpoint <> "/#{get_id!(id)}/cash_balance")
+    |> put_method(:post)
+    |> put_params(params)
+    |> make_request()
+  end
+
+
 end
