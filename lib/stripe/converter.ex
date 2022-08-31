@@ -21,6 +21,7 @@ defmodule Stripe.Converter do
     billing_portal.session
     capability
     card
+    cash_balance
     charge
     checkout.session
     country_spec

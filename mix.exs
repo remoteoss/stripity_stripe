@@ -129,6 +129,7 @@ defmodule Stripe.Mixfile do
       "Payment Methods": [
         Stripe.BankAccount,
         Stripe.Card,
+        Stripe.CashBalance,
         Stripe.PaymentMethod,
         Stripe.Source
       ],
