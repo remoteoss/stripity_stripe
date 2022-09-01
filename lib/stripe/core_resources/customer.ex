@@ -209,8 +209,12 @@ defmodule Stripe.Customer do
   {:ok, customer} = Stripe.Customer.retrieve("sub_123")
 
   """
-  @spec cash_balance(Stripe.id() | t, Stripe.options()) ::
-          {:ok, t} | {:error, Stripe.Error.t()}
+  @spec cash_balance(Stripe.id() | t, params, Stripe.options()) :: {:ok, t} | {:error, Stripe.Error.t()}
+        when params:
+               %{
+                 optional(:settings) => Stripe.Types.metadata()
+               }
+               | %{}
   def cash_balance(id, params, opts \\ []) do
     new_request(opts)
     |> put_endpoint(@plural_endpoint <> "/#{get_id!(id)}/cash_balance")
@@ -218,6 +222,4 @@ defmodule Stripe.Customer do
     |> put_params(params)
     |> make_request()
   end
-
-
 end

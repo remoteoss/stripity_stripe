@@ -51,8 +51,7 @@ defmodule Stripe.PaymentIntentTest do
   end
 
   test "is applyable to customer balance" do
-    assert {:ok, %Stripe.PaymentIntent{}} =
-      Stripe.PaymentIntent.apply_customer_balance("cus_123")
+    assert {:ok, %Stripe.PaymentIntent{}} = Stripe.PaymentIntent.apply_customer_balance("cus_123")
 
     assert_stripe_requested(:post, "/v1/payment_intents/cus_123/apply_customer_balance")
   end

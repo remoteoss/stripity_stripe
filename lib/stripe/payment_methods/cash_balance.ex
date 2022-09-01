@@ -6,15 +6,15 @@ defmodule Stripe.CashBalance do
   use Stripe.Entity
 
   @type t :: %__MODULE__{
-    object: String.t(),
-    available: available(),
-    customer: String.t(),
-    livemode: boolean,
-    settings: settings()
-  }
+          object: String.t(),
+          available: available(),
+          customer: String.t(),
+          livemode: boolean,
+          settings: settings()
+        }
 
   @type settings :: %{
-          reconciliation_mode: String.t(),
+          reconciliation_mode: String.t()
         }
 
   @type available :: %{
