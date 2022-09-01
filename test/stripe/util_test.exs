@@ -17,6 +17,7 @@ defmodule Stripe.UtilTest do
       assert object_name_to_module("external_account") == Stripe.ExternalAccount
       assert object_name_to_module("file") == Stripe.FileUpload
       assert object_name_to_module("invoice") == Stripe.Invoice
+      assert object_name_to_module("cash_balance") == Stripe.CashBalance
       assert object_name_to_module("invoiceitem") == Stripe.Invoiceitem
       assert object_name_to_module("line_item") == Stripe.LineItem
       assert object_name_to_module("list") == Stripe.List
