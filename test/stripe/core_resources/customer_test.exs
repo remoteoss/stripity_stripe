@@ -41,4 +41,12 @@ defmodule Stripe.CustomerTest do
       assert_stripe_requested(:delete, "/v1/customers/#{customer.id}/discount")
     end
   end
+
+  describe "cash_balance/3" do
+    test "changes settings to customer cash balance" do
+      params = %{settings: %{reconciliation_mode: "manual"}}
+      assert {:ok, _} = Stripe.Customer.cash_balance("cus_123", params)
+      assert_stripe_requested(:post, "/v1/customers/cus_123/cash_balance")
+    end
+  end
 end

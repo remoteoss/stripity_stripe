@@ -87,6 +87,13 @@ Moreover, if you are using Poison instead of Jason, you can configure the librar
 config :stripity_stripe, json_library: Poison
 ```
 
+
+## Troubleshotting
+
+### Stripe mock PATH
+  If you have any problema related to `:stripe_mock_path` while running `mix deps.get`, install the stripe-mock lib
+  You can see instructions [here](https://github.com/stripe/stripe-mock#usage).
+
 ### Timeout
 
 To set timeouts, pass opts for the http client. The default one is Hackney.
