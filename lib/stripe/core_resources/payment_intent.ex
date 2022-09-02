@@ -314,7 +314,7 @@ defmodule Stripe.PaymentIntent do
   end
 
   @doc """
-    Apply customer balance(Reconcile a customer_balance PaymentIntent manually)
+  Apply customer balance(Reconcile a customer_balance PaymentIntent manually)
    See the [Stripe docs](https://stripe.com/docs/api/payment_intents/apply_customer_balance).
   """
 
