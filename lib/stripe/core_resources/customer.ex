@@ -199,14 +199,16 @@ defmodule Stripe.Customer do
   @doc """
   A customer's Cash balance represents real funds.
   Customers can add funds to their cash balance by sending a bank transfer.
-  These funds can be used for payment and can eventually be paid out to your bank account.
+  These funds can be used to reconciliate PaymentIntents with source “cash_balance”.
+  The settings[reconciliation_mode] field describes whether these funds
+  are applied to such PaymentIntents manually or automatically.
 
   This function changes the settings on a customer’s cash balance.
 
   Example:  Change reconcilation mode to manual
 
-   params = %{settings: %{reconciliation_mode: "manual"}}
-  {:ok, customer} = Stripe.Customer.retrieve("sub_123")
+    params = %{settings: %{reconciliation_mode: "manual"}}
+    {:ok, cash_Balance} = Stripe.Customer.cash_balance("cus_123")
 
   """
   @spec cash_balance(Stripe.id() | t, params, Stripe.options()) :: {:ok, t} | {:error, Stripe.Error.t()}
