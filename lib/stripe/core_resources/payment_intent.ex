@@ -315,7 +315,7 @@ defmodule Stripe.PaymentIntent do
 
   @doc """
   Apply customer balance(Reconcile a customer_balance PaymentIntent manually)
-   See the [Stripe docs](https://stripe.com/docs/api/payment_intents/apply_customer_balance).
+  See the [Stripe docs](https://stripe.com/docs/api/payment_intents/apply_customer_balance).
   """
 
   @spec apply_customer_balance(Stripe.id() | t, params, Stripe.options()) :: {:ok, t} | {:error, Stripe.Error.t()}
