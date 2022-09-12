@@ -208,16 +208,16 @@ defmodule Stripe.Customer do
   Example:  Change reconcilation mode to manual
 
     params = %{settings: %{reconciliation_mode: "manual"}}
-    {:ok, cash_Balance} = Stripe.Customer.cash_balance("cus_123")
+    {:ok, cash_Balance} = Stripe.Customer.update_cash_balance("cus_123")
 
   """
-  @spec cash_balance(Stripe.id() | t, params, Stripe.options()) :: {:ok, t} | {:error, Stripe.Error.t()}
+  @spec update_cash_balance(Stripe.id() | t, params, Stripe.options()) :: {:ok, t} | {:error, Stripe.Error.t()}
         when params:
                %{
                  optional(:settings) => Stripe.Types.metadata()
                }
                | %{}
-  def cash_balance(id, params, opts \\ []) do
+  def update_cash_balance(id, params, opts \\ []) do
     new_request(opts)
     |> put_endpoint(@plural_endpoint <> "/#{get_id!(id)}/cash_balance")
     |> put_method(:post)

@@ -42,10 +42,10 @@ defmodule Stripe.CustomerTest do
     end
   end
 
-  describe "cash_balance/3" do
+  describe "update_cash_balance/3" do
     test "changes settings to customer cash balance" do
       params = %{settings: %{reconciliation_mode: "manual"}}
-      assert {:ok, _} = Stripe.Customer.cash_balance("cus_123", params)
+      assert {:ok, _} = Stripe.Customer.update_cash_balance("cus_123", params)
       assert_stripe_requested(:post, "/v1/customers/cus_123/cash_balance")
     end
   end
