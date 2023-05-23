@@ -27,6 +27,7 @@ defmodule Stripe.PaymentMethod do
           last4: String.t() | nil,
           sort_code: String.t() | nil
         }
+
   @type us_bank_account :: %{
           account_holder_type: String.t() | nil,
           account_type: String.t() | nil,
@@ -37,6 +38,7 @@ defmodule Stripe.PaymentMethod do
           networks: %{preferred: String.t() | nil, supported: list | nil} | nil,
           routing_number: String.t() | nil
         }
+
   @type t :: %__MODULE__{
           id: Stripe.id(),
           object: String.t(),
