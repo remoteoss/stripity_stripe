@@ -40,6 +40,10 @@ defmodule Stripe.Mandate do
             reference: String.t(),
             url: String.t()
           },
+          optional(:us_bank_account) =>
+            %{
+              # The docs list this as a hash with no attributes.
+            },
           type: String.t()
         }
 
