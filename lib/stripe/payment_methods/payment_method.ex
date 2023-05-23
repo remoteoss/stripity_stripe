@@ -28,6 +28,17 @@ defmodule Stripe.PaymentMethod do
           sort_code: String.t() | nil
         }
 
+  @type us_bank_account :: %{
+          account_holder_type: String.t() | nil,
+          account_type: String.t() | nil,
+          bank_name: String.t() | nil,
+          financial_connections_account: String.t() | nil,
+          fingerprint: String.t() | nil,
+          last4: String.t() | nil,
+          networks: %{preferred: String.t() | nil, supported: list | nil} | nil,
+          routing_number: String.t() | nil
+        }
+
   @type t :: %__MODULE__{
           id: Stripe.id(),
           object: String.t(),
@@ -46,6 +57,7 @@ defmodule Stripe.PaymentMethod do
           au_becs_debit: au_becs_debit() | nil,
           sepa_debit: sepa_debit() | nil,
           bacs_debit: bacs_debit() | nil,
+          us_bank_account: us_bank_account() | nil,
           type: String.t()
         }
 
@@ -62,6 +74,7 @@ defmodule Stripe.PaymentMethod do
     :au_becs_debit,
     :sepa_debit,
     :bacs_debit,
+    :us_bank_account,
     :type
   ]
 
