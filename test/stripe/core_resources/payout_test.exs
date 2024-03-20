@@ -11,7 +11,7 @@ defmodule Stripe.PayoutTest do
 
   describe "retrieve/2" do
     test "retrieves a payout" do
-      assert {:ok, %Stripe.Payout{}} = Stripe.Payout.retrieve("py_123") |> dbg()
+      assert {:ok, %Stripe.Payout{}} = Stripe.Payout.retrieve("py_123")
       assert_stripe_requested(:get, "/v1/payouts/py_123")
     end
   end
