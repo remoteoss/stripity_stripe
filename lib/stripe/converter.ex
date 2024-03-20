@@ -166,11 +166,11 @@ defmodule Stripe.Converter do
     defp warn_unknown_object(%{"object" => object_name}) do
       require Logger
 
-      Logger.warn("Unknown object received: #{object_name}")
+      Logger.warning("Unknown object received: #{object_name}")
     end
   end
 
-  if Mix.env() == :prod do
+  if Mix.env() == :dev do
     defp check_for_extra_keys(_, _), do: :ok
   else
     defp check_for_extra_keys(struct_keys, map) do
@@ -201,7 +201,7 @@ defmodule Stripe.Converter do
 
         details = "#{module_name}: #{inspect(extra_keys)}"
         message = "Extra keys were received but ignored when converting #{details}"
-        Logger.warn(message)
+        Logger.warning(message)
       end
 
       :ok

@@ -30,7 +30,6 @@ defmodule Stripe.Mixfile do
   # Configuration for the OTP application
   def application do
     [
-      applications: apps(Mix.env()),
       extra_applications: [:plug],
       env: env(),
       mod: {Stripe, []}
@@ -53,16 +52,12 @@ defmodule Stripe.Mixfile do
     ]
   end
 
-  defp apps(:test), do: apps()
-  defp apps(_), do: apps()
-  defp apps, do: [:hackney, :logger, :jason, :uri_query]
-
   defp deps do
     [
       {:dialyxir, "1.1.0", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:excoveralls, "~> 0.14.1", only: :test},
-      {:hackney, "~> 1.15"},
+      {:hackney, "~> 1.18.1"},
       {:inch_ex, "~> 2.0", only: [:dev, :test]},
       {:mox, "~> 0.4", only: :test},
       {:jason, "~> 1.1"},
