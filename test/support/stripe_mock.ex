@@ -53,20 +53,11 @@ defmodule Stripe.StripeMock do
 
   @impl true
   def handle_info(
-        {:DOWN, os_pid, :process, _ex_pid, _reason},
-        %{os_pid: os_pid, opts: opts, restarting: {true, from}} = state
+        %{os_pid: os_pid, opts: opts, restarting: {true, from}} = state,
+        {:DOWN, os_pid, :process, _ex_pid, _reason}
       ) do
     {:ok, manager_pid, os_pid} = start_stripe_mock(opts)
     GenServer.reply(from, :ok)
-    {:noreply, %{state | manager_pid: manager_pid, os_pid: os_pid, restarting: false}}
-  end
-
-  @impl true
-  def handle_info(
-        {:DOWN, os_pid, :process, _ex_pid, _reason},
-        %{os_pid: os_pid, opts: opts, restarting: false} = state
-      ) do
-    {:ok, manager_pid, os_pid} = start_stripe_mock(opts)
     {:noreply, %{state | manager_pid: manager_pid, os_pid: os_pid, restarting: false}}
   end
 
