@@ -30,7 +30,7 @@ defmodule Stripe.Payout do
           statement_descriptor: String.t() | nil,
           status: String.t(),
           type: String.t(),
-          trace_id: String.t() | nil
+          trace_id: map() | nil
         }
 
   defstruct [
