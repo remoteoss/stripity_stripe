@@ -29,7 +29,8 @@ defmodule Stripe.Payout do
           source_type: String.t(),
           statement_descriptor: String.t() | nil,
           status: String.t(),
-          type: String.t()
+          type: String.t(),
+          trace_id: map() | nil
         }
 
   defstruct [
@@ -53,7 +54,8 @@ defmodule Stripe.Payout do
     :source_type,
     :statement_descriptor,
     :status,
-    :type
+    :type,
+    :trace_id
   ]
 
   @plural_endpoint "payouts"
