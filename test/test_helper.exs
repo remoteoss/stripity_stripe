@@ -1,4 +1,4 @@
-ExUnit.start()
+ExUnit.start(capture_log: true)
 # Stripe.start
 Application.ensure_all_started(:erlexec)
 Application.ensure_all_started(:exexec)
