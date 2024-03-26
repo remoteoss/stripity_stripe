@@ -380,8 +380,11 @@ defmodule Stripe.API do
   end
 
   defp do_perform_request_and_retry(method, url, headers, body, opts, {:attempts, attempts}) do
-    log_request(method, url, headers, attempts)
-    response = http_module().request(method, url, headers, body, opts)
+    {idempotency_key, attempt} = log_request(method, url, headers, attempts)
+
+    response = track_request_time(method, url, idempotency_key, attempt,
+      fn -> http_module().request(method, url, headers, body, opts) end
+    )
 
     do_perform_request_and_retry(
       method,
@@ -390,6 +393,25 @@ defmodule Stripe.API do
       body,
       opts,
       add_attempts(response, attempts, retry_config())
+    )
+  end
+
+  defp track_request_time(method, url, idempotency_key, attempt, request_fn) do
+    start_metadata = %{
+      method: method,
+      url: url,
+      idempotency_key: idempotency_key,
+      attempt: attempt
+    }
+
+    :telemetry.span([:stripity_stripe, :request],
+      start_metadata,
+      fn ->
+        result = request_fn.()
+
+        # we don't produce any more metadata to add to the span, hence the empty map
+        {result, %{}}
+      end
     )
   end
 
@@ -403,6 +425,8 @@ defmodule Stripe.API do
     attempt = "attempt=#{attempts + 1}"
 
     Logger.info("[stripity_stripe] Performing #{http_method_url} #{attempt}#{idempotency_key_msg}")
+
+    {idempotency_key, attempts+1}
   end
 
   defp get_idempotency_key_from_headers(method, _headers) when method in [:get, :headers], do: nil
