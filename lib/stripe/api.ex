@@ -5,6 +5,9 @@ defmodule Stripe.API do
   Usually the utilities in `Stripe.Request` are a better way to write custom interactions with
   the API.
   """
+
+  require Logger
+
   alias Stripe.{Config, Error}
 
   @callback oauth_request(method, String.t(), map) :: {:ok, map}
@@ -377,6 +380,7 @@ defmodule Stripe.API do
   end
 
   defp do_perform_request_and_retry(method, url, headers, body, opts, {:attempts, attempts}) do
+    log_request(method, url, headers, attempts)
     response = http_module().request(method, url, headers, body, opts)
 
     do_perform_request_and_retry(
@@ -387,6 +391,30 @@ defmodule Stripe.API do
       opts,
       add_attempts(response, attempts, retry_config())
     )
+  end
+
+  defp log_request(method, url, headers, attempts) do
+    http_method_url = "'#{String.upcase(to_string(method))} #{url}'"
+
+    idempotency_key = get_idempotency_key_from_headers(method, headers)
+    idempotency_key_msg = if idempotency_key, do: " idempotency_key=#{idempotency_key}"
+
+    # attempts are 0-index based
+    attempt = "attempt=#{attempts + 1}"
+
+    Logger.info("[stripity_stripe] Performing #{http_method_url} #{attempt}#{idempotency_key_msg}")
+  end
+
+  defp get_idempotency_key_from_headers(method, _headers) when method in [:get, :headers], do: nil
+
+  defp get_idempotency_key_from_headers(_method, headers) do
+    case Enum.find(headers, fn {k, _v} -> k == @idempotency_key_header end) do
+      {_, idempotency_key} ->
+        idempotency_key
+
+      nil ->
+        "<missing>"
+    end
   end
 
   @spec add_attempts(http_success | http_failure, non_neg_integer, Keyword.t()) ::
