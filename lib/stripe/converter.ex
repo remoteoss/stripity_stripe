@@ -170,7 +170,7 @@ defmodule Stripe.Converter do
     end
   end
 
-  if Mix.env() == :dev do
+  if Mix.env() == :prod do
     defp check_for_extra_keys(_, _), do: :ok
   else
     defp check_for_extra_keys(struct_keys, map) do
