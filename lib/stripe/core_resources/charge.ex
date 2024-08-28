@@ -89,7 +89,7 @@ defmodule Stripe.Charge do
           livemode: boolean,
           metadata: Stripe.Types.metadata(),
           on_behalf_of: Stripe.id() | Stripe.Account.t() | nil,
-          order: Stripe.id() | Stripe.Order.t() | nil,
+          order: Stripe.id() | nil,
           outcome: charge_outcome | nil,
           paid: boolean,
           payment_intent: Stripe.id() | Stripe.PaymentIntent.t() | nil,

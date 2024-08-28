@@ -49,7 +49,7 @@ defmodule Stripe.Card do
           last4: String.t(),
           metadata: Stripe.Types.metadata(),
           name: String.t() | nil,
-          recipient: Stripe.id() | Stripe.Recipient.t() | nil,
+          recipient: Stripe.id() | nil,
           tokenization_method: String.t() | nil
         }
 

@@ -211,7 +211,8 @@ defmodule Stripe.Customer do
     {:ok, cash_Balance} = Stripe.Customer.update_cash_balance("cus_123")
 
   """
-  @spec update_cash_balance(Stripe.id() | t, params, Stripe.options()) :: {:ok, t} | {:error, Stripe.Error.t()}
+  @spec update_cash_balance(Stripe.id() | t, params, Stripe.options()) ::
+          {:ok, t} | {:error, Stripe.Error.t()}
         when params:
                %{
                  optional(:settings) => Stripe.Types.metadata()
