@@ -5,8 +5,8 @@ on:
     types: [opened, reopened, synchronize]
   push:
     branches:
-      - 'master'
-      - 'remote'
+      - "master"
+      - "remote"
 
 jobs:
   test:
@@ -18,39 +18,39 @@ jobs:
     runs-on: ubuntu-latest
     name: Test (OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}})
     strategy:
-       matrix:
-         elixir: ['1.12']
-         # All of the above can use this version. For details see: https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp
-         otp: [24]
+      matrix:
+        elixir: ["1.12"]
+        # All of the above can use this version. For details see: https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp
+        otp: [24]
     services:
-       stripe-mock:
-         image: stripe/stripe-mock:v0.125.0
-         ports:
-           - 12111:12111
-           - 12112:12112
+      stripe-mock:
+        image: stripe/stripe-mock:v0.125.0
+        ports:
+          - 12111:12111
+          - 12112:12112
     steps:
-    - name: Clone code
-      uses: actions/checkout@v2
-    - name: Setup Elixir and Erlang
-      uses: erlef/setup-beam@v1
-      with:
+      - name: Clone code
+        uses: actions/checkout@v2
+      - name: Setup Elixir and Erlang
+        uses: erlef/setup-beam@v1
+        with:
           otp-version: ${{ matrix.otp }}
           elixir-version: ${{ matrix.elixir }}
-    - name: Mix Dependencies
-      run: mix deps.get
-    - name: Test
-      run: mix test
+      - name: Mix Dependencies
+        run: mix deps.get
+      - name: Test
+        run: mix test
 
   lint:
     runs-on: ubuntu-latest
     name: Linting
     strategy:
       matrix:
-        elixir: ['1.12', '1.11', '1.10']
+        elixir: ["1.17", "1.16"]
         # All of the above can use this version. For details see: https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp
-        otp: [24, 23, 22]
+        otp: [26, 25]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: erlef/setup-beam@v1
         with:
           otp-version: ${{matrix.otp}}
@@ -62,7 +62,7 @@ jobs:
           path: ~/.mix
           key: cache-${{ runner.os }}-${{ env.cache-name }}-${{ matrix.otp }}-${{ matrix.elixir }}
           restore-keys: |
-             cache-${{ runner.os }}-${{ env.cache-name }}-
+            cache-${{ runner.os }}-${{ env.cache-name }}-
       - uses: actions/cache@v1
         env:
           cache-name: build
@@ -70,7 +70,7 @@ jobs:
           path: _build
           key: cache-${{ runner.os }}-${{ env.cache-name }}-${{ matrix.otp }}-${{ matrix.elixir }}
           restore-keys: |
-             cache-${{ runner.os }}-${{ env.cache-name }}-
+            cache-${{ runner.os }}-${{ env.cache-name }}-
       - run: mix deps.get
       - run: mix compile --warnings-as-errors
       - run: mix dialyzer --halt-exit-status
