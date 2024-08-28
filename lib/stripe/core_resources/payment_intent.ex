@@ -318,7 +318,8 @@ defmodule Stripe.PaymentIntent do
   See the [Stripe docs](https://stripe.com/docs/api/payment_intents/apply_customer_balance).
   """
 
-  @spec apply_customer_balance(Stripe.id() | t, params, Stripe.options()) :: {:ok, t} | {:error, Stripe.Error.t()}
+  @spec apply_customer_balance(Stripe.id() | t, params, Stripe.options()) ::
+          {:ok, t} | {:error, Stripe.Error.t()}
         when params: %{
                optional(:amount) => non_neg_integer,
                optional(:currency) => String.t()
